@@ -1,0 +1,7 @@
+---
+- name: install with include module httpd
+  yum:
+    name: httpd
+    state: latest
+
+         
