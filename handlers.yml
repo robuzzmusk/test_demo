@@ -1,0 +1,33 @@
+---
+- name: first playbook
+  hosts: localhost
+  become: yes
+  tasks:
+   - name: install httpd
+     yum:
+       name: httpd
+       state: latest
+   - name: start web server
+     service:
+        name: httpd
+        state: started
+   - name: copy the files
+     copy:
+       src: index.html
+       dest: /var/www/html/index.html
+     notify: restart web server
+   - name: copy the files2
+     copy:
+       src: index1.html
+       dest: /var/www/html/index1.html
+     notify: restart web server    
+  handlers:     
+   - name: restart web server
+     service:
+        name: httpd
+        state: restarted
+   - name: copy the files
+     copy:
+       src: index.html
+       dest: /var/www/html/index.html  
+         
